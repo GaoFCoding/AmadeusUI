@@ -1,0 +1,26 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/script.rpy", line 37, in script
+    python:
+  File "game/script.rpy", line 46, in <module>
+    client.connect((host,port)) #socket客户端连接服务端
+ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "game/script.rpy", line 37, in script
+    python:
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\ast.py", line 1131, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\python.py", line 1061, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 46, in <module>
+    client.connect((host,port)) #socket客户端连接服务端
+ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+
+Windows-10-10.0.22621 AMD64
+Ren'Py 8.0.3.22090809
+Amadeus System version2.0
+Sat Feb  4 17:03:30 2023

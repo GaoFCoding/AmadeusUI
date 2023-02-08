@@ -49,7 +49,7 @@ G265000.pth
 
 将`vosk-model-cn-0.15`文件夹放入到voice2Text目录，将`G265000.pth`放入到TTS_model目录下即可
 
-1. 语音识别需要将`ffmpeg.exe`和`ffprobe.exe`两个文件放到项目目录下，可以自行去官网下载获取，或者通过下面的链接自取：
+5. 语音识别需要将`ffmpeg.exe`和`ffprobe.exe`两个文件放到项目目录下，可以自行去官网下载获取，或者通过下面的链接自取：
 https://www.aliyundrive.com/s/BiB2yxoJhJF
 提取码: 6m9i
 

@@ -1,26 +1,33 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 37, in script
-    python:
-  File "game/script.rpy", line 46, in <module>
-    client.connect((host,port)) #socket客户端连接服务端
-ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+  File "game/script.rpy", line 144, in script
+    jump talk_voice
+  File "game/script.rpy", line 144, in script
+    jump talk_voice
+Exception: Possible infinite loop.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 37, in script
-    python:
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\ast.py", line 1131, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\python.py", line 1061, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/script.rpy", line 46, in <module>
-    client.connect((host,port)) #socket客户端连接服务端
-ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\bootstrap.py", line 277, in bootstrap
+    renpy.main.main()
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\main.py", line 660, in main
+    run(restart)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\main.py", line 146, in run
+    renpy.execution.run_context(True)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\execution.py", line 938, in run_context
+    context.run()
+  File "game/script.rpy", line 144, in script
+    jump talk_voice
+  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python3.9/site-packages/future/utils/__init__.py", line 441, in raise_
+  File "game/script.rpy", line 144, in script
+    jump talk_voice
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\execution.py", line 61, in check_infinite_loop
+    raise Exception("Possible infinite loop.")
+Exception: Possible infinite loop.
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.0.3.22090809
 Amadeus System version2.0
-Sat Feb  4 17:03:30 2023
+Thu Feb  9 12:15:58 2023

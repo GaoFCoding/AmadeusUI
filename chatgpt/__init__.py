@@ -1,8 +1,5 @@
-import os
 from pyChatGPT import ChatGPT
-from .cookieDecode import get_cookie_from_chrome
 from voice2Text import getVoiceInput
-import winsound as ws
 
 """
     this module use pyChatGPT(a python wapper) to post request
@@ -10,64 +7,80 @@ import winsound as ws
     go through robot detection.
 """
 
-def getInput():
-    user_input = input("input your words (use 'quit' to exit):\n")
-    return user_input
+class ChatGPTHolder(ChatGPT):
 
-def getTokenByUser():
-    token = input("Copy your token from ChatGPT and press Enter \n")
-    return token
+    def __init__(self, api: ChatGPT = None, session_token: str = None, isfirstReq: bool = True):
+        self.api = api
+        self.session_token = session_token
+        self.isfirstReq = isfirstReq
 
-def getAPI_Obj():
+    @staticmethod
+    def GetInput():
+        user_input = input("input your words (use 'quit' to exit):\n")
+        return user_input
 
-    session_token = getTokenByUser() #get token by user input
+    @staticmethod
+    def GetTokenByUser():
+        token = input("Copy your token from ChatGPT and press Enter \n")
+        return token
 
-    api = ChatGPT(session_token) #get api obj
-    return api
+    def GetAPI_Obj(self):
 
+        session_token = ChatGPTHolder.GetTokenByUser() #get token by user input
 
-def getAPI_Obj_Chrome():
-    session_token = get_cookie_from_chrome()
-    api = ChatGPT(session_token)
-    return api
+        self.api = ChatGPT(session_token) #get api obj
 
+    def GetAPI_Obj_Chrome(self):
+        api = ChatGPT(self.session_token)
+        self.api = api
 
-def sendRequestByW(question,api)-> ChatGPT:
-    """
-        send req to openai server by user write
-    """
-    reqMsg = question
+    def SendRequestByW(self,question)-> ChatGPT:
+        """
+            send req to openai server by user write
+        """
+        reqMsg = question
 
-    if reqMsg == '再见':
-        # ws.PlaySound(r'.\output_sound\saybye.wav',flags=ws.SND_FILENAME)
-        return "quit"
+        if reqMsg == '再见':
+            # ws.PlaySound(r'.\output_sound\saybye.wav',flags=ws.SND_FILENAME)
+            return "quit"
 
-    res = api.send_message(reqMsg) #send message to openai and get respone
+        res = self.api.send_message(reqMsg) #send message to openai and get respone
 
-    message = res["message"].replace('\n','') #get message
+        message = res["message"].replace('\n','') #get message
 
-    return message
+        return message
 
-def sendRequestByVoc(api) -> ChatGPT:
-    """
-        send req to openai server by user voice
-    """
-    reqMsg = getVoiceInput()
+    def SendRequestByVoc(self) -> ChatGPT:
+        """
+            send req to openai server by user voice
+        """
+        reqMsg = getVoiceInput()
 
-    if reqMsg == "再见":
-        # ws.PlaySound(r'.\output_sound\saybye.wav',flags=ws.SND_FILENAME)
-        return "quit"
+        if reqMsg == "再见":
+            # ws.PlaySound(r'.\output_sound\saybye.wav',flags=ws.SND_FILENAME)
+            return "quit"
 
-    res = api.send_message(reqMsg) #send message to openai and get respone
+        res = self.api.send_message(reqMsg) #send message to openai and get respone
 
-    message = res["message"].replace('\n','') #get message
+        message = res["message"].replace('\n','') #get message
 
-    return message
+        return message
 
-def sendReqByChoice(question,choice,api):
-    if choice == "1": #choice voice input
-        message = sendRequestByVoc(api)
-    else: #default:w
-        message = sendRequestByW(question,api)
+    def SendReqByChoice(self,question,choice):
+        if choice == "1": #choice voice input
+            message = self.SendRequestByVoc()
+        else: #default:w
+            message = self.SendRequestByW(question)
 
-    return message
+        return message
+
+    def InitChatGPT(self):
+        if self.isfirstReq:
+            with open("./chatgpt/init_chatgpt.txt",encoding='utf-8') as textfile: #read init text file
+                initChatgptText =  textfile.read()
+            self.api.send_message(initChatgptText) #send init message
+            self.isfirstReq = False
+            return True
+        else:
+            return False
+    

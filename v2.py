@@ -1,84 +1,41 @@
-import os
-import sys
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) #添加项目目录路径到path列表中
-# sys.path.append(BASE_DIR)
-# print(sys.path)
-import torch
-from TTS_proj import commons
-from TTS_proj import utils
-from TTS_proj.models import SynthesizerTrn
-from TTS_proj.text.symbols import symbols
-from TTS_proj.text import text_to_sequence
-import winsound as ws
-from scipy.io.wavfile import write
 from langdetect import detect
-import chatgpt
+from chatgpt import ChatGPTHolder
+from chatgpt.cookieDecode import get_cookie_from_chrome
 from chatgpt import translate_Bidu
-import logging
-from socket_server import SendData,RecData,SocketServerKeeper
-from socket_server import RemoveFromPool
-from voice2Text import getVoiceInput
+from socket_server import SocketClient
+from TTS_model import SoundGenerator
+from voice2Text import getVoiceInput,loadVoiceModel
 from pydub import AudioSegment
+import logging
 
+numba_logger = logging.getLogger('numba') #初始化日志 
+numba_logger.setLevel(logging.WARNING) #设置日志级别
 
-numba_logger = logging.getLogger('numba')
-numba_logger.setLevel(logging.WARNING)
+session_token = get_cookie_from_chrome() #获取session_token
 
-def get_text(text, hps):  #输入文本处理
-    text_norm = text_to_sequence(text, hps.data.text_cleaners)
-    if hps.data.add_blank:
-        text_norm = commons.intersperse(text_norm, 0)
-    text_norm = torch.LongTensor(text_norm)
-    return text_norm
+cnn = ChatGPTHolder(session_token=session_token) #实例化api对象
+cnn.GetAPI_Obj_Chrome() #实例化chatgpt子类
 
-hps = utils.get_hparams_from_file("./TTS_model/configs/steins_gate_base.json") #获取模型input参数配置文件
+clienter = SocketClient() #实例化SocketClient类
 
-net_g = SynthesizerTrn( #生成语音合成器
-    len(symbols),
-    hps.data.filter_length // 2 + 1,
-    hps.train.segment_size // hps.data.hop_length,
-    **hps.model)
-_ = net_g.eval()
-
-_ = utils.load_checkpoint("./TTS_model/G_265000.pth", net_g, None) #获取TTS模型
-
-
-def SoundGenerator(content):
-  """
-    语音生成器，向模型中输入预处理的文本信号，输出语音并保存为.wav文件
-  """
-  stn_tst = get_text(content, hps)
-  with torch.no_grad():
-      x_tst = stn_tst.unsqueeze(0)
-      x_tst_lengths = torch.LongTensor([stn_tst.size(0)])
-      audio = net_g.infer(x_tst, x_tst_lengths, noise_scale=.667, noise_scale_w=0.8, length_scale=1)[0][0,0].data.float().numpy()
-      write("./output_sound/output.wav", hps.data.sampling_rate, audio) #写入语音文件(.wav)到output_sound文件夹
-      print("generate sound success")
-
+print("********************************\n welcome to Amadeus v2.1\n********************************")        
 
 def main():
 
-    SocketServerKeeper() #socket连接
+    clienter.SocketServerKeeper() #socket连接
 
-    print("********************************\n welcome to Amadeus v2.0\n********************************")
-        
-    try:
-        api = chatgpt.getAPI_Obj_Chrome() #获取pychatgpt的api对象
-    except:
-        raise ValueError("please check your network !!!")
-        
+    isfirst = cnn.InitChatGPT() #初始化chatgpt
 
-    with open("./chatgpt/init_chatgpt.txt",encoding='utf-8') as textfile: #读取初始化chatgpt设定的文本
-       initChatgptText =  textfile.read()
-    api.send_message(initChatgptText) #输入初始化设定
+    if isfirst:
+        isClient = clienter.SendData("first") #首次初始化
+        if isClient == -1:
+            return
+    else:
+        isClient = clienter.SendData("second") #非首次初始化
+        if isClient == -1:
+            return
 
-    isClient = SendData("chatgpt and v2 server is ready")  #发送完成服务端与chatgpt初始化的信息
-    if isClient == -1: #连接中断处理
-        return
-    print("已发送消息")
-
-    
-    choice = RecData() #inputMethod: Keyboard/Voice
+    choice = clienter.RecData() #inputMethod: Keyboard/Voice
     if choice == -1: #连接中断处理
         return
 
@@ -88,19 +45,17 @@ def main():
 
     #***************获取用户问题*****************#
         if choice == 0:
-            # total_data = bytes()
-            # while True:
-            #     data = client.recv(1024)
-            #     total_data += data
-            #     if len(data) < 1024:
-            #         break
-            question = RecData()
+            question = clienter.RecData()
             if question == -1: #连接中断处理
                 return
 
         elif choice == 1:
-            question = getVoiceInput()
-            isClient = SendData(question)
+            model = loadVoiceModel() #获取声学模型
+            isClient = clienter.SendData("ok")
+            if isClient == -1:
+                return
+            question = getVoiceInput(model)
+            isClient = clienter.SendData(question)
             if isClient == -1: #连接中断处理
                 return
 
@@ -108,23 +63,28 @@ def main():
 
     #***************获取回复*****************#
 
-
-        message = chatgpt.sendReqByChoice(question,choice,api)
+        try:
+            message = cnn.SendReqByChoice(question,choice) #发送消息，若发送失败则重连
+        except:
+            cnn.isfirstReq = True
+            cnn.GetAPI_Obj_Chrome()
+            cnn.InitChatGPT()
+            message = cnn.SendReqByChoice(question,choice) #重新发送
 
         print("Amadeus:\n",message,"\n...end")
 
         if message == "quit":
-            isClient = SendData(message) #发送退出信号给客户端
+            isClient = clienter.SendData(message) #发送退出信号给客户端
             if isClient == -1:
                 return
-            RemoveFromPool() #删除连接池中的连接
+            clienter.RemoveFromPool() #删除连接池中的连接
             print("exit from Amadeus v2.0")
             return
         
         lanType = detect(message)
 
         if lanType != "ja": #chatgpt回复判断，确保输入到模型的语料是Ja
-            isClient = SendData("retry")
+            isClient = clienter.SendData("retry")
             if isClient == -1:
                 return
             print("\nthe resp was not in Ja, please retry\n")
@@ -141,18 +101,16 @@ def main():
 
         translateRes = translate_Bidu.baiduTranslate(message) #通过百度翻译将输出的日文译为中文
 
-        isClient = SendData(translateRes) #将译文传给客户端
+        isClient = clienter.SendData(translateRes) #将译文传给客户端
         if isClient == -1:
             return
 
-        msg = RecData() #在此阻塞直到客户端播放完成
+        msg = clienter.RecData() #在此阻塞直到客户端播放完成
         if msg == -1:
             return
         print(msg) 
-        # ws.PlaySound(r'.\output_sound\output.wav',flags=ws.SND_FILENAME) #播报生成的语音
-        
 
 if __name__ == "__main__":
 
     while True:
-        main() #主线程
+        main() #主线程,与chatgptholder并行

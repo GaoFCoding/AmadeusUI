@@ -1,33 +1,44 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 144, in script
-    jump talk_voice
-  File "game/script.rpy", line 144, in script
-    jump talk_voice
-Exception: Possible infinite loop.
+  File "game/script.rpy", line 10, in script
+    image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop = True, fade=True)
+  File "game/script.rpy", line 10, in script
+    image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop = True, fade=True)
+  File "game/script.rpy", line 10, in <module>
+    image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop = True, fade=True)
+OSError: Couldn't find file 'resources/amadeus/per_speak.moc3'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
   File "D:\workSpace\renpy-8.0.3-sdk\renpy\bootstrap.py", line 277, in bootstrap
     renpy.main.main()
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\main.py", line 660, in main
-    run(restart)
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\main.py", line 146, in run
-    renpy.execution.run_context(True)
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\execution.py", line 938, in run_context
-    context.run()
-  File "game/script.rpy", line 144, in script
-    jump talk_voice
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\main.py", line 558, in main
+    renpy.game.context().run(node)
+  File "game/script.rpy", line 10, in script
+    image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop = True, fade=True)
   File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python3.9/site-packages/future/utils/__init__.py", line 441, in raise_
-  File "game/script.rpy", line 144, in script
-    jump talk_voice
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\execution.py", line 61, in check_infinite_loop
-    raise Exception("Possible infinite loop.")
-Exception: Possible infinite loop.
+  File "game/script.rpy", line 10, in script
+    image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop = True, fade=True)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\ast.py", line 1230, in execute
+    img = renpy.python.py_eval_bytecode(self.code.bytecode)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\python.py", line 1085, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+  File "game/script.rpy", line 10, in <module>
+    image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop = True, fade=True)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 555, in __init__
+    common = self.create_common(default_fade)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 499, in create_common
+    rv = Live2DCommon(self.filename, default_fade)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\gl2\live2d.py", line 202, in __init__
+    self.model = renpy.gl2.live2dmodel.Live2DModel(self.base + self.model_json["FileReferences"]["Moc"])
+  File "live2dmodel.pyx", line 199, in renpy.gl2.live2dmodel.Live2DModel.__init__
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\loader.py", line 820, in load
+    raise IOError("Couldn't find file '%s'." % name)
+OSError: Couldn't find file 'resources/amadeus/per_speak.moc3'.
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.0.3.22090809
-Amadeus System version2.0
-Thu Feb  9 12:15:58 2023
+Amadeus System version2.1
+Sat Feb 11 10:04:57 2023

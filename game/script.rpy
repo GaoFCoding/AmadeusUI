@@ -6,8 +6,8 @@ define bgm = "music/bgm.mp3"
 image amadeus = "images/per.png"
 image background = "gui/background.png"
 image downline_bg = "gui/downline_bg.png"
-#define config.gl2 = True 获得l2d模型加载的支持（后续）
-# image kuris = Live2D("", base=.6, loop = True, fade=True)
+define config.gl2 = True
+image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop = True, fade=False)
 
 
 
@@ -25,7 +25,7 @@ label start:
             jump DownLine
             
 label DownLine:
-    scene downline_bg
+    show kuris speaking
     # show amadeus
     voice "/audio/downline.ogg"
     voice sustain
@@ -106,7 +106,7 @@ label choiceYourInput:
 
 
 label talk_keyboard:
-    show amadeus
+    show kuris breathing
     $ renpy.block_rollback()
     python:
         message = renpy.input("冈部(You)：")
@@ -115,7 +115,7 @@ label talk_keyboard:
     jump checkRes
 
 label waitingForModel:
-    show amadeus
+    show kuris breathing
     s "等待声学模型加载..."
     python:
         client.setblocking(1) #设置阻塞
@@ -162,6 +162,7 @@ label checkRes:
 
         if response == "quit":
             $ client.close() #断开连接
+            show kuris speaking
             voice "/audio/saybye.ogg"
             a "那么，下次再见，冈部"
             voice sustain
@@ -184,6 +185,7 @@ label checkRes:
             
 
 label answer:
+    show kuris speaking
     voice "/audio/output.ogg"
     $ renpy.block_rollback()
     a "[response]"

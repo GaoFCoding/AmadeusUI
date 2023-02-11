@@ -1,0 +1,31 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "per_speak.moc3",
+		"Textures": [
+			"per_speak.1024/texture_00.png"
+		],
+		"DisplayInfo": "per_speak.cdi3.json",
+		"Motions":{
+			"":[
+				{"File":"motions/breathing.motion3.json"},
+				{"File":"motions/speaking.motion3.json"},
+				{"File":"motions/speaking2.motion3.json"},
+				{"File":"motions/speaking3.motion3.json"},
+				{"File":"motions/speaking4.motion3.json"}
+			]
+		}
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		}
+	]
+}

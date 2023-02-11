@@ -18,7 +18,7 @@ cnn.GetAPI_Obj_Chrome() #实例化chatgpt子类
 
 clienter = SocketClient() #实例化SocketClient类
 
-print("********************************\n welcome to Amadeus v2.1\n********************************")        
+print("********************************\n welcome to Amadeus v2.2\n********************************")        
 
 def main():
 
@@ -78,7 +78,7 @@ def main():
             if isClient == -1:
                 return
             clienter.RemoveFromPool() #删除连接池中的连接
-            print("exit from Amadeus v2.0")
+            print("exit from Amadeus v2.2")
             return
         
         lanType = detect(message)

@@ -1,7 +1,7 @@
 from langdetect import detect
 from chatgpt import ChatGPTHolder
 from chatgpt.cookieDecode import get_cookie_from_chrome
-from chatgpt import translate_Bidu
+from chatgpt import translate
 from socket_server import SocketClient
 from TTS_model import SoundGenerator
 from voice2Text import getVoiceInput,loadVoiceModel
@@ -16,7 +16,9 @@ session_token = get_cookie_from_chrome() #获取session_token
 cnn = ChatGPTHolder(session_token=session_token) #实例化api对象
 cnn.GetAPI_Obj_Chrome() #实例化chatgpt子类
 
-clienter = SocketClient() #实例化SocketClient类
+clienter = SocketClient() #实例化SocketClient对象
+
+model = loadVoiceModel() #实例化V2T模型对象
 
 print("********************************\n welcome to Amadeus v2.2\n********************************")        
 
@@ -50,11 +52,7 @@ def main():
                 return
 
         elif choice == 1:
-            model = loadVoiceModel() #获取声学模型
-            isClient = clienter.SendData("ok")
-            if isClient == -1:
-                return
-            question = getVoiceInput(model)
+            question = getVoiceInput(model).replace(" ","")
             isClient = clienter.SendData(question)
             if isClient == -1: #连接中断处理
                 return
@@ -99,7 +97,7 @@ def main():
         sound = AudioSegment.from_wav(file=src)
         sound.export(dst, format="ogg") #将生成的音频转换成ogg格式并放到rpy的audio目录
 
-        translateRes = translate_Bidu.baiduTranslate(message) #通过百度翻译将输出的日文译为中文
+        translateRes = translate.TranslateByBaidu(message) #通过翻译将输出的日文译为中文
 
         isClient = clienter.SendData(translateRes) #将译文传给客户端
         if isClient == -1:

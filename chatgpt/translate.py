@@ -3,11 +3,13 @@ import hashlib
 import http
 import json
 import urllib
+from googletrans import Translator 
 
+#百度api
 appid = '20230204001549890'  # 填写你的appid
 secretKey = 'IqMxbyJ_Z35uddDeeEld'  # 填写你的密钥
 
-def baiduTranslate(translate_text):
+def TranslateByBaidu(translate_text):
     """
         translate API from BaiDu
     """
@@ -39,19 +41,22 @@ def baiduTranslate(translate_text):
 
     except Exception as e:
         print(e)
+        return translate_text #翻译失败返回原文
     finally:
         if httpClient:
             httpClient.close() #关闭连接
 
+#谷歌翻译api
+def TranslateByGoogle(translate_text):
+    try:
+        translator = Translator(service_urls=[
+            'translate.google.cn',
+            'translate.google.com',
+            ])
 
-# if __name__ == '__main__':
-#     # 手动录入翻译内容，q存放
-#     # q = raw_input("please input the word you want to translate:")
-#     q = "こんにちは"
-#     '''
-#     flag=1 输入的句子翻译成英文
-#     flag=0 输入的句子翻译成中文
-#     '''
-#     result = baiduTranslate(q)  # 百度翻译
-#     print("原句:"+q)
-#     print(result)
+        trans=translator.translate(translate_text, src='ja', dest='zh-cn')
+    except Exception as e:
+        print(e)
+        return translate_text #翻译失败返回原文
+    return trans.text #返回译文
+

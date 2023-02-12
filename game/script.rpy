@@ -7,7 +7,7 @@ image amadeus = "images/per.png"
 image background = "gui/background.png"
 image downline_bg = "gui/downline_bg.png"
 define config.gl2 = True
-image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop = True, fade=False)
+image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop = True, fade=True)
 
 
 
@@ -116,16 +116,11 @@ label talk_keyboard:
 
 label waitingForModel:
     show kuris breathing
-    s "等待声学模型加载..."
-    python:
-        client.setblocking(1) #设置阻塞
-        isModelOK = client.recv(1024) #在此等待，直到模型加载完成
-    if isModelOK.decode() == "ok":
-        u "正在输入语音..."
-        jump talk_voice
-    jump waitingForModel
+    s "请输入语音..."
+    jump talk_voice
 
 label talk_voice:
+    u "..."
     $ renpy.block_rollback()
     
     python:
@@ -159,6 +154,7 @@ label checkRes:
         python:
             response = total_data.decode()
             total_data = bytes()
+            print("res is : ",response)
 
         if response == "quit":
             $ client.close() #断开连接

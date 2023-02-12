@@ -39,7 +39,9 @@
 2. 访问openai服务器需要使用代理，建议梯子挂在日本，不过好像香港地区已经可以访问了？
 3. 在使用前，你必须注册自己的openai账号，请自行上网查找注册指南
 4. 可以自行将服务端改为可实现远程部署的版本，但是不推荐，因为目前使用的该wrapper还不太稳定，需要本地监控调试，等后续openai真正开放chatgpt的api的时候会进行相应的修改
-5. 仓库未使用lfs存储，因此并未上传运行所需的VOSK，TTS模型文件，需要模型的朋友可以通过下面链接自取，或者使用自己的模型替换：
+5. UI窗口输出的中文是将chatgpt的日文回复通过调用百度翻译API实现的，要使用此功能需要自行前往http://api.fanyi.baidu.com/获取自己的api key，并在chatgpt/translate_Baidu.py中修改，
+或者更换其他API
+6. 仓库未使用lfs存储，因此并未上传运行所需的VOSK，TTS模型文件，需要模型的朋友可以通过下面链接自取，或者使用自己的模型替换：
 vosk-model-cn-0.15
 https://www.aliyundrive.com/s/ykW5XHJEwa8
 提取码: 89cd

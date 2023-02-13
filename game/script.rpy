@@ -6,7 +6,7 @@ image amadeus = "images/per.png"
 image background = "gui/background.png"
 image downline_bg = "gui/downline_bg.png"
 define config.gl2 = True
-image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop = True, fade=True)
+image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop=True, fade=True, seamless=True)
 
 # 游戏在此开始。
 label start:

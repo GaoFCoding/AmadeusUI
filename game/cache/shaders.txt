@@ -1,11 +1,11 @@
+renpy.texture live2d.flip_texture renpy.texture live2d.flip_texture
+renpy.dissolve renpy.dissolve
+renpy.ftl
+renpy.geometry renpy.texture
+renpy.geometry renpy.solid
 renpy.texture
+renpy.solid
 renpy.dissolve renpy.geometry
 renpy.alpha renpy.texture
-renpy.geometry renpy.texture
 renpy.alpha renpy.geometry renpy.texture
-renpy.solid
 live2d.flip_texture renpy.geometry renpy.texture
-renpy.texture live2d.flip_texture renpy.texture live2d.flip_texture
-renpy.ftl
-renpy.geometry renpy.solid
-renpy.dissolve renpy.dissolve

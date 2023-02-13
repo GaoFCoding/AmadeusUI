@@ -40,7 +40,7 @@ class ChatGPTHolder(ChatGPT):
         """
         reqMsg = question
 
-        if reqMsg == '再见':
+        if "再见" in reqMsg:
             # ws.PlaySound(r'.\output_sound\saybye.wav',flags=ws.SND_FILENAME)
             return "quit"
 
@@ -56,7 +56,7 @@ class ChatGPTHolder(ChatGPT):
         """
         reqMsg = getVoiceInput()
 
-        if reqMsg == "再见":
+        if "再见" in reqMsg:
             # ws.PlaySound(r'.\output_sound\saybye.wav',flags=ws.SND_FILENAME)
             return "quit"
 

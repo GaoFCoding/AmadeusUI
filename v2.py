@@ -53,10 +53,15 @@ def main():
 
         elif choice == 1:
             question = getVoiceInput(model).replace(" ","")
-            isClient = clienter.SendData(question)
+            isClient = clienter.SendData(question) #向客户端发送问题
             if isClient == -1: #连接中断处理
                 return
 
+            getQues = clienter.RecData() #阻塞直到客户端收到question
+            print(getQues)
+            if getQues == -1:
+                return
+            
         print("Question Received: " + question)
 
     #***************获取回复*****************#

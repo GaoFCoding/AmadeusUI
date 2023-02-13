@@ -135,6 +135,7 @@ label talk_voice:
         $ finishInput = finishInput.decode()
         $ renpy.block_rollback() #防止回滚
         u "[finishInput]"
+        $ client.send("ok".encode()) #通知服务端已收到回复，可以继续
         jump checkRes
     jump talk_voice
     
@@ -145,16 +146,13 @@ label checkRes:
     python:
         client.setblocking(0)
         try:
-                data = client.recv(1024)
-                total_data += data
+            resData = client.recv(1024)
         except:
-                data = bytes()
+            resData = bytes()
                 # client.setblocking(1)
-    if(len(data) > 0 and len(data) < 1024): #获取到回复
+    if(len(resData) > 0 and len(resData) < 1024): #获取到回复
         python:
-            response = total_data.decode()
-            total_data = bytes()
-            print("res is : ",response)
+            response = resData.decode()
 
         if response == "quit":
             $ client.close() #断开连接

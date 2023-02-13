@@ -73,11 +73,11 @@ def getVoiceInput(model):
             rec = KaldiRecognizer(model, args.samplerate)
             while True:
                 data = q.get()
-                print("waiting...")
+                # print("listening...")
                 if rec.AcceptWaveform(data):
                     resData = rec.Result()
                     msg = eval(resData)
-                    print("out...")
+                    # print("output...")
                     return msg["text"]
 
     except KeyboardInterrupt:

@@ -53,6 +53,9 @@ def main():
 
         elif choice == 1:
             question = getVoiceInput(model).replace(" ","")
+            if question == "":
+                continue
+
             isClient = clienter.SendData(question) #向客户端发送问题
             if isClient == -1: #连接中断处理
                 return

@@ -1,21 +1,30 @@
 ﻿# 初始化相关参数与python脚本
 define a = Character("Amadeus红莉栖")
-define u = Character("冈部(You)")
+define u = Character("冈部伦太郎(You)")
 define s = Character("Amadeus System")
-define bgm = "music/bgm.mp3"
 image amadeus = "images/per.png"
 image background = "gui/background.png"
 image downline_bg = "gui/downline_bg.png"
 define config.gl2 = True
 image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop = True, fade=True)
 
-
-
 # 游戏在此开始。
 label start:
     with dissolve
     scene background
-    play music bgm
+    python:
+        import random
+        musicList = [
+                "music/bgm1.mp3",
+                "music/bgm2.mp3",
+                "music/bgm3.mp3",
+                "music/bgm4.ogg",
+                "music/bgm5.mp3",
+                "music/bgm6.mp3",
+                "music/bgm7.mp3"
+                ]
+        random.shuffle(musicList)
+    play music musicList
 
     menu optional_name:
         s "请选择交互模式"
@@ -109,14 +118,14 @@ label talk_keyboard:
     show kuris breathing
     $ renpy.block_rollback()
     python:
-        message = renpy.input("冈部(You)：")
+        message = renpy.input("冈部伦太郎(You)：")
         client.send(message.encode())
         data = bytes()
     jump checkRes
 
 label waitingForModel:
     show kuris breathing
-    s "请输入语音..."
+    s "请输入语音（按下't'键后开始录入）..."
     jump talk_voice
 
 label talk_voice:

@@ -1,22 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 132, in script
-    jump waitingForMode
-ScriptError: could not find label 'waitingForMode'.
+  File "game/script.rpy", line 159, in script
+    python:
+  File "game/script.rpy", line 160, in <module>
+    response = resData.decode()
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x93 in position 0: invalid start byte
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 132, in script
-    jump waitingForMode
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\ast.py", line 1974, in execute
-    rv = renpy.game.script.lookup(target)
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\script.py", line 927, in lookup
-    raise ScriptError("could not find label '%s'." % str(original))
-ScriptError: could not find label 'waitingForMode'.
+  File "game/script.rpy", line 159, in script
+    python:
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\ast.py", line 1131, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\python.py", line 1061, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 160, in <module>
+    response = resData.decode()
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x93 in position 0: invalid start byte
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.0.3.22090809
 Amadeus System version2.2
-Sat Feb 11 12:38:00 2023
+Mon Feb 13 22:02:07 2023

@@ -6,6 +6,7 @@ from socket_server import SocketClient
 from TTS_model import SoundGenerator
 from voice2Text import getVoiceInput,loadVoiceModel
 from pydub import AudioSegment
+import keyboard
 import logging
 
 numba_logger = logging.getLogger('numba') #初始化日志 
@@ -52,6 +53,7 @@ def main():
                 return
 
         elif choice == 1:
+            keyboard.wait("t")
             question = getVoiceInput(model).replace(" ","")
             if question == "":
                 continue

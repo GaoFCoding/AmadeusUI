@@ -1,5 +1,5 @@
 # AmaduesUI
->Amadeus version2.0
+>Amadeus version2.3
 
 ## 技术栈
 1. RenPy
@@ -40,7 +40,7 @@
 3. 在使用前，你必须注册自己的openai账号，请自行上网查找注册指南
 4. 可以自行将服务端改为可实现远程部署的版本，但是不推荐，因为目前使用的该wrapper还不太稳定，需要本地监控调试，等后续openai真正开放chatgpt的api的时候会进行相应的修改
 5. UI窗口输出的中文是将chatgpt的日文回复通过调用百度翻译API实现的，要使用此功能需要自行前往http://api.fanyi.baidu.com 获取自己的api key，并在chatgpt/translate.py中修改,或者更换其他API（百度翻译要钱，免费的每月限制5w字符）
-6. 在使用语音输入的时候,按下't'键开始录音, 默认的电脑麦克风容易受到环境杂音的影响导致误录，通过耳机输入会好一点
+6. 在使用语音输入的时候, 默认的电脑麦克风容易受到环境杂音的影响导致误录，通过耳机输入会好一点
 7. 仓库未使用lfs存储，因此并未上传运行所需的VOSK，TTS模型文件，需要模型的朋友可以通过下面链接自取，或者使用自己的模型替换：
 vosk-model-cn-0.15
 https://www.aliyundrive.com/s/ykW5XHJEwa8

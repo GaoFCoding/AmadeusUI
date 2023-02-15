@@ -16,12 +16,12 @@ define config.name = _("Amadeus System")
 
 ## 决定上面给出的标题是否显示在标题界面屏幕。设置为 False 来隐藏标题。
 
-define gui.show_name = True
+define gui.show_name = False
 
 
 ## 游戏版本号。
 
-define config.version = "version2.2"
+define config.version = "version2.3"
 
 
 ## 放置在游戏内“关于”屏幕上的文本。将文本放在三个引号之间，并在段落之间留出空

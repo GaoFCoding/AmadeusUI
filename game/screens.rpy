@@ -245,7 +245,7 @@ screen quick_menu():
             textbutton _("回退") action Rollback()
             textbutton _("历史") action ShowMenu('history')
             # textbutton _("快进") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("自动") action Preference("auto-forward", "toggle")
+            textbutton _("自动") action Preference("auto-forward", "enable")
             textbutton _("保存") action ShowMenu('save')
             # textbutton _("快存") action QuickSave()
             # textbutton _("快读") action QuickLoad()
@@ -253,8 +253,8 @@ screen quick_menu():
 
 
 ## 此代码确保只要用户没有主动隐藏界面，就会在游戏中显示 quick_menu 界面。
-init python:
-    config.overlay_screens.append("quick_menu")
+# init python:
+#     config.overlay_screens.append("quick_menu")
 
 default quick_menu = True
 
@@ -1396,7 +1396,7 @@ screen quick_menu():
 
             textbutton _("回退") action Rollback()
             textbutton _("快进") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("自动") action Preference("auto-forward", "toggle")
+            textbutton _("自动") action Preference("auto-forward", "enable")
             textbutton _("菜单") action ShowMenu()
 
 

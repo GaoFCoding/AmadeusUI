@@ -1,12 +1,12 @@
 ﻿# 初始化相关参数与python脚本
-define a = Character("Amadeus红莉栖")
+define a = Character("Amadeus牧濑红莉栖")
 define u = Character("冈部伦太郎(You)")
 define s = Character("Amadeus System")
 image amadeus = "images/per.png"
 image background = "gui/background.png"
 image downline_bg = "gui/downline_bg.png"
 define config.gl2 = True
-image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop=True, fade=True, seamless=True)
+image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop=True, fade=True)
 
 # 游戏在此开始。
 label start:
@@ -34,6 +34,7 @@ label start:
             jump DownLine
             
 label DownLine:
+    with fade
     show kuris speaking
     # show amadeus
     voice "/audio/downline.ogg"
@@ -106,13 +107,18 @@ label choiceYourInput:
             python:
                 client.send(("0").encode())
                 keyboard = True
-            jump talk_keyboard
         "voice":
             python:
                 client.send(("1").encode())
                 keyboard = False
-            jump waitingForModel
+    jump Transition
 
+label Transition:
+    with fade
+    if keyboard == True:
+        jump talk_keyboard
+    else:
+        jump waitingForModel
 
 label talk_keyboard:
     show kuris breathing
@@ -125,7 +131,7 @@ label talk_keyboard:
 
 label waitingForModel:
     show kuris breathing
-    s "请输入语音（按下't'键后开始录入）..."
+    s "..."
     jump talk_voice
 
 label talk_voice:

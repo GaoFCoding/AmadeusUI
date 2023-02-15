@@ -6,7 +6,6 @@ from socket_server import SocketClient
 from TTS_model import SoundGenerator
 from voice2Text import getVoiceInput,loadVoiceModel
 from pydub import AudioSegment
-import keyboard
 import logging
 
 numba_logger = logging.getLogger('numba') #初始化日志 
@@ -21,7 +20,7 @@ clienter = SocketClient() #实例化SocketClient对象
 
 model = loadVoiceModel() #实例化V2T模型对象
 
-print("********************************\n welcome to Amadeus v2.2\n********************************")        
+print("********************************\n welcome to Amadeus v2.3\n********************************")        
 
 def main():
 
@@ -53,7 +52,6 @@ def main():
                 return
 
         elif choice == 1:
-            keyboard.wait("t")
             question = getVoiceInput(model).replace(" ","")
             if question == "":
                 continue
@@ -86,7 +84,7 @@ def main():
             if isClient == -1:
                 return
             clienter.RemoveFromPool() #删除连接池中的连接
-            print("exit from Amadeus v2.2")
+            print("exit from Amadeus System")
             return
         
         lanType = detect(message)

@@ -1,26 +1,60 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 159, in script
-    python:
-  File "game/script.rpy", line 160, in <module>
-    response = resData.decode()
-UnicodeDecodeError: 'utf-8' codec can't decode byte 0x93 in position 0: invalid start byte
+  File "game/screens.rpy", line 340, in execute
+    screen main_menu():
+  File "game/screens.rpy", line 340, in execute
+    screen main_menu():
+  File "game/screens.rpy", line 354, in execute
+    if gui.show_name:
+  File "game/screens.rpy", line 354, in <module>
+    if gui.show_name:
+AttributeError: 'StoreModule' object has no attribute 'show_name'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 159, in script
-    python:
+  File "renpy/common/_layout/screen_main_menu.rpym", line 28, in script
+    python hide:
   File "D:\workSpace\renpy-8.0.3-sdk\renpy\ast.py", line 1131, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "D:\workSpace\renpy-8.0.3-sdk\renpy\python.py", line 1061, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 160, in <module>
-    response = resData.decode()
-UnicodeDecodeError: 'utf-8' codec can't decode byte 0x93 in position 0: invalid start byte
+  File "renpy/common/_layout/screen_main_menu.rpym", line 28, in <module>
+    python hide:
+  File "renpy/common/_layout/screen_main_menu.rpym", line 35, in _execute_python_hide
+    ui.interact()
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\ui.py", line 299, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 3377, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 3810, in interact_core
+    root_widget.visit_all(lambda i : i.per_interact())
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 582, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\screen.py", line 451, in visit_all
+    callback(self)
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 3810, in <lambda>
+    root_widget.visit_all(lambda i : i.per_interact())
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\screen.py", line 462, in per_interact
+    self.update()
+  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\screen.py", line 653, in update
+    self.screen.function(**self.scope)
+  File "game/screens.rpy", line 340, in execute
+    screen main_menu():
+  File "game/screens.rpy", line 340, in execute
+    screen main_menu():
+  File "game/screens.rpy", line 354, in execute
+    if gui.show_name:
+  File "game/screens.rpy", line 354, in <module>
+    if gui.show_name:
+AttributeError: 'StoreModule' object has no attribute 'show_name'
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.0.3.22090809
 Amadeus System version2.2
-Mon Feb 13 22:02:07 2023
+Wed Feb 15 11:59:18 2023

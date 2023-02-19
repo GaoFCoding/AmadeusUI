@@ -11,6 +11,7 @@ image kuris = Live2D("resources/amadeus/per_speak.model3.json", base=1.0, loop=T
 # 游戏在此开始。
 label start:
     with dissolve
+    $ renpy.movie_cutscene("resources/transition/begin.mpeg")
     scene background
     python:
         import random
@@ -39,7 +40,7 @@ label DownLine:
     # show amadeus
     voice "/audio/downline.ogg"
     voice sustain
-    a "不好意思，这个功能还没做出来噢"
+    a "不好意思，这个功能暂未完成..."
     return
 
 
@@ -69,7 +70,7 @@ label ConnectServer:
 
 label ConnectWrong:
     with dissolve
-    s "与服务器握手失败，请检查服务器是否正常运作"
+    s "与服务器握手失败，请检查服务器是否正常运作..."
     return
 
 #等待服务端初始化完成

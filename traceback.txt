@@ -1,60 +1,64 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
-While running game code:
-  File "game/screens.rpy", line 340, in execute
-    screen main_menu():
-  File "game/screens.rpy", line 340, in execute
-    screen main_menu():
-  File "game/screens.rpy", line 354, in execute
-    if gui.show_name:
-  File "game/screens.rpy", line 354, in <module>
-    if gui.show_name:
-AttributeError: 'StoreModule' object has no attribute 'show_name'
+While loading <renpy.display.im.Image object ('gui/begin.png') at 0x0000000005b057c0>:
+OSError: Couldn't find file 'gui/begin.png'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
   File "renpy/common/_layout/screen_main_menu.rpym", line 28, in script
     python hide:
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\ast.py", line 1131, in execute
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\ast.py", line 1131, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\python.py", line 1061, in py_exec_bytecode
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\python.py", line 1061, in py_exec_bytecode
     exec(bytecode, globals, locals)
   File "renpy/common/_layout/screen_main_menu.rpym", line 28, in <module>
     python hide:
   File "renpy/common/_layout/screen_main_menu.rpym", line 35, in _execute_python_hide
     ui.interact()
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\ui.py", line 299, in interact
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\ui.py", line 299, in interact
     rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 3377, in interact
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\core.py", line 3377, in interact
     repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 3810, in interact_core
-    root_widget.visit_all(lambda i : i.per_interact())
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 582, in visit_all
-    d.visit_all(callback, seen)
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 582, in visit_all
-    d.visit_all(callback, seen)
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 582, in visit_all
-    d.visit_all(callback, seen)
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\screen.py", line 451, in visit_all
-    callback(self)
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\core.py", line 3810, in <lambda>
-    root_widget.visit_all(lambda i : i.per_interact())
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\screen.py", line 462, in per_interact
-    self.update()
-  File "D:\workSpace\renpy-8.0.3-sdk\renpy\display\screen.py", line 653, in update
-    self.screen.function(**self.scope)
-  File "game/screens.rpy", line 340, in execute
-    screen main_menu():
-  File "game/screens.rpy", line 340, in execute
-    screen main_menu():
-  File "game/screens.rpy", line 354, in execute
-    if gui.show_name:
-  File "game/screens.rpy", line 354, in <module>
-    if gui.show_name:
-AttributeError: 'StoreModule' object has no attribute 'show_name'
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\core.py", line 3912, in interact_core
+    self.draw_screen(root_widget, fullscreen_video, (not fullscreen_video) or video_frame_drawn)
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\core.py", line 2602, in draw_screen
+    surftree = renpy.display.render.render_screen(
+  File "render.pyx", line 495, in renpy.display.render.render_screen
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\layout.py", line 884, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\layout.py", line 884, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\layout.py", line 884, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\screen.py", line 704, in render
+    child = renpy.display.render.render(self.child, w, h, st, at)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\layout.py", line 884, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 266, in renpy.display.render.render
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\im.py", line 627, in render
+    return cache.get(self, render=True)
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\im.py", line 295, in get
+    surf = image.load()
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\im.py", line 720, in load
+    raise e
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\display\im.py", line 685, in load
+    filelike = renpy.loader.load(self.filename)
+  File "D:\workSpace\Amadeus-version2.3-win\renpy\loader.py", line 820, in load
+    raise IOError("Couldn't find file '%s'." % name)
+OSError: Couldn't find file 'gui/begin.png'.
 
 Windows-10-10.0.22621 AMD64
 Ren'Py 8.0.3.22090809
-Amadeus System version2.2
-Wed Feb 15 11:59:18 2023
+Amadeus System version2.3
+Wed Feb 15 18:49:48 2023

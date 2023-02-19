@@ -60,7 +60,7 @@ define gui.text_font = "Deng.ttf"
 define gui.name_text_font = "Deng.ttf"
 
 ## 游戏外文本使用的字体。
-define gui.interface_text_font = "Deng.ttf"
+define gui.interface_text_font = "SourceHanSansLite.ttf"
 
 ## 普通对话文本的大小。
 define gui.text_size = 33
@@ -85,7 +85,7 @@ define gui.title_text_size = 75
 
 ## 标题菜单和游戏菜单使用的图像。
 define gui.main_menu_background = "gui/begin.png"
-define gui.game_menu_background = "gui/begin.png"
+define gui.game_menu_background = "gui/background.png"
 
 
 ## 对话 ##########################################################################

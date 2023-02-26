@@ -1,4 +1,4 @@
-# AmaduesUI
+# Amadeus
 >Amadeus version2.3
 
 ## 技术栈

@@ -15,9 +15,7 @@
 
 ***
 ### 如何使用
-1. 项目未对python环境打包，需要你自己配置好程序运行所需要的环境，最好使用anaconda创建虚拟环境方便包管理，程序运行所需的依赖我已经在`requirements.txt`中列出
-
-环境配置流程：
+项目未对python环境打包，需要你自己配置好程序运行所需要的环境，最好使用anaconda创建虚拟环境方便包管理，程序运行所需的依赖我已经在`requirements.txt`中列出
 
 服务端环境配置：
 1. 首先创建好新的虚拟环境后（假设你创建的环境名为`demo`）
@@ -42,9 +40,9 @@
 5. UI窗口输出的中文是将chatgpt的日文回复通过调用百度翻译API实现的，要使用此功能需要自行前往http://api.fanyi.baidu.com 获取自己的api key，并在chatgpt/translate.py中修改,或者更换其他API（百度翻译要钱，免费的每月限制5w字符）
 6. 在使用语音输入的时候, 默认的电脑麦克风容易受到环境杂音的影响导致误录，通过耳机输入会好一点
 7. 仓库未使用lfs存储，因此并未上传运行所需的VOSK，TTS模型文件，需要模型的朋友可以通过下面链接自取，或者使用自己的模型替换：
+
 vosk-model-cn-0.15
-https://www.aliyundrive.com/s/ykW5XHJEwa8
-提取码: 89cd
+https://alphacephei.com/vosk/models/vosk-model-cn-0.15.zip
 
 G265000.pth
 链接：https://pan.baidu.com/s/1IqbQp-wnJQSiyB-irRHTIQ 
@@ -52,12 +50,13 @@ G265000.pth
 
 将`vosk-model-cn-0.15`文件夹放入到voice2Text目录，将`G265000.pth`放入到TTS_model目录下即可
 
-5. 语音识别需要将`ffmpeg.exe`和`ffprobe.exe`两个文件放到项目目录下，可以自行去官网下载获取，或者通过下面的链接自取：
+8. 语音识别需要将`ffmpeg.exe`和`ffprobe.exe`两个文件放到项目目录下，可以自行去官网下载获取，或者通过下面的链接自取：
 https://www.aliyundrive.com/s/BiB2yxoJhJF
 提取码: 6m9i
 
 也可以尝试使用自己训练的模型来进行替换，这里就不讲述教程了，自行阅读代码，非常的简单（需要替换模型与模型相关配置的json文件）
-6. 初始化ChatGPT设定的文件在`./chatgpt/init_chatgpt.txt`，可以自行根据喜好修改chatGPT扮演设定。
+
+9. 初始化ChatGPT设定的文件在`./chatgpt/init_chatgpt.txt`，可以自行根据喜好修改chatGPT扮演设定。
 
 ### 更新计划
 1. 目前还是demo版本，完全是出于个人兴趣制作的一个简易版本，本人大三了准备考研，后续如果不太忙会继续更新的

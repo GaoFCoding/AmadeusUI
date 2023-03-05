@@ -87,15 +87,16 @@ def main():
             print("exit from Amadeus System")
             return
         
-        lanType = detect(message)
-
+        lanType = detect(message) #输出语言判断
         if lanType != "ja": #chatgpt回复判断，确保输入到模型的语料是Ja
+            message = translate.TranslateByBaidu(message, toLang="ja",fromLang="zh") #纠正中文输出，将中文转换为日文
+            """
             isClient = clienter.SendData("retry")
             if isClient == -1:
                 return
             print("\nthe resp was not in Ja, please retry\n")
             continue
-        
+            """        
         # make sound file
         SoundGenerator(message)
 

@@ -9,16 +9,13 @@ from googletrans import Translator
 appid = '20230204001549890'  # 填写你的appid
 secretKey = 'aWc8Iq9dG4CaRdQb0IFP'  # 填写你的密钥
 
-def TranslateByBaidu(translate_text):
+def TranslateByBaidu(translate_text, toLang:str = "zh", fromLang:str = "auto"):
     """
         translate API from BaiDu
     """
-
+    
     httpClient = None
     myurl = '/api/trans/vip/translate'  # 通用翻译API HTTP地址
-    fromLang = 'auto'  # 原文语种
-
-    toLang = 'zh'  # 译文语种
 
     salt = random.randint(3276, 65536)
 

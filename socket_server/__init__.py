@@ -41,6 +41,8 @@ class SocketClient(socket):
             if len(res) > 0:
                 return res
             else:
+                self.Client_Pool[0].close() #关闭当前连接
+                del self.Client_Pool[0]
                 return -1
         except:
             self.Client_Pool[0].close() #关闭当前连接

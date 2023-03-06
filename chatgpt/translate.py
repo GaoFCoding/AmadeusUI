@@ -6,8 +6,8 @@ import urllib
 from googletrans import Translator 
 
 #百度api
-appid = '20230204001549890'  # 填写你的appid
-secretKey = 'aWc8Iq9dG4CaRdQb0IFP'  # 填写你的密钥
+appid = 'xxxxx'  # 填写你的appid
+secretKey = 'xxxxxx'  # 填写你的密钥
 
 def TranslateByBaidu(translate_text, toLang:str = "zh", fromLang:str = "auto"):
     """

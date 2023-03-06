@@ -1,86 +1,43 @@
-from pyChatGPT import ChatGPT
-from voice2Text import getVoiceInput
+import openai
 
 """
-    this module use pyChatGPT(a python wapper) to post request
-    to openai server and can successfully interact with chatGPT without 
-    go through robot detection.
+    the following function uses chatgpt api with the model which calls
+    'gpt-3.5-turbo'.
 """
 
-class ChatGPTHolder(ChatGPT):
+TalkingNoteBook = [] #communication history record
 
-    def __init__(self, api: ChatGPT = None, session_token: str = None, isfirstReq: bool = True):
-        self.api = api
-        self.session_token = session_token
-        self.isfirstReq = isfirstReq
+openai.api_key = "填写你自己的chatgpt—api"
 
-    @staticmethod
-    def GetInput():
-        user_input = input("input your words (use 'quit' to exit):\n")
-        return user_input
-
-    @staticmethod
-    def GetTokenByUser():
-        token = input("Copy your token from ChatGPT and press Enter \n")
-        return token
-
-    def GetAPI_Obj(self):
-
-        session_token = ChatGPTHolder.GetTokenByUser() #get token by user input
-
-        self.api = ChatGPT(session_token) #get api obj
-
-    def GetAPI_Obj_Chrome(self):
-        api = ChatGPT(self.session_token)
-        self.api = api
-
-    def SendRequestByW(self,question)-> ChatGPT:
-        """
-            send req to openai server by user write
-        """
-        reqMsg = question
-
-        if "再见" in reqMsg:
-            # ws.PlaySound(r'.\output_sound\saybye.wav',flags=ws.SND_FILENAME)
-            return "quit"
-
-        res = self.api.send_message(reqMsg) #send message to openai and get respone
-
-        message = res["message"].replace('\n','') #get message
-
-        return message
-
-    def SendRequestByVoc(self) -> ChatGPT:
-        """
-            send req to openai server by user voice
-        """
-        reqMsg = getVoiceInput()
-
-        if "再见" in reqMsg:
-            # ws.PlaySound(r'.\output_sound\saybye.wav',flags=ws.SND_FILENAME)
-            return "quit"
-
-        res = self.api.send_message(reqMsg) #send message to openai and get respone
-
-        message = res["message"].replace('\n','') #get message
-
-        return message
-
-    def SendReqByChoice(self,question,choice):
-        if choice == "1": #choice voice input
-            message = self.SendRequestByVoc()
-        else: #default:w
-            message = self.SendRequestByW(question)
-
-        return message
-
-    def InitChatGPT(self):
-        if self.isfirstReq:
-            with open("./chatgpt/init_chatgpt.txt",encoding='utf-8') as textfile: #read init text file
-                initChatgptText =  textfile.read()
-            self.api.send_message(initChatgptText) #send init message
-            self.isfirstReq = False
-            return True
-        else:
-            return False
+def InitChatGPT():
+    with open("./chatgpt/init_chatgpt.txt",encoding='utf-8') as textfile:
+        initChatgptText =  textfile.read()
     
+    TalkingNoteBook.append({"role":"system","content":initChatgptText})
+    res = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=TalkingNoteBook
+    )
+
+    response = res['choices'][0]['message']['content']
+    TalkingNoteBook.append({"role":"assistant","content":response}) #add to history record
+
+def SendRequest(reqMsg:str):
+    """
+        send request to openai server and receive the response
+    """
+    if "再见" in reqMsg:
+        return "quit"
+    
+    TalkingNoteBook.append({"role":"user","content":reqMsg})
+    res = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=TalkingNoteBook
+        )
+    
+    response = res['choices'][0]['message']['content']
+    TalkingNoteBook.append({"role":"assistant","content":response}) #add to history record
+    return response
+
+
+

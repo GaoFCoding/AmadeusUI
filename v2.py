@@ -1,6 +1,5 @@
+import chatgpt
 from langdetect import detect
-from chatgpt import ChatGPTHolder
-from chatgpt.cookieDecode import get_cookie_from_chrome
 from chatgpt import translate
 from socket_server import SocketClient
 from TTS_model import SoundGenerator
@@ -11,10 +10,7 @@ import logging
 numba_logger = logging.getLogger('numba') #初始化日志 
 numba_logger.setLevel(logging.WARNING) #设置日志级别
 
-session_token = get_cookie_from_chrome() #获取session_token
-
-cnn = ChatGPTHolder(session_token=session_token) #实例化api对象
-cnn.GetAPI_Obj_Chrome() #实例化chatgpt子类
+chatgpt.InitChatGPT()
 
 clienter = SocketClient() #实例化SocketClient对象
 
@@ -25,17 +21,6 @@ print("********************************\n welcome to Amadeus v2.3\n*************
 def main():
 
     clienter.SocketServerKeeper() #socket连接
-
-    isfirst = cnn.InitChatGPT() #初始化chatgpt
-
-    if isfirst:
-        isClient = clienter.SendData("first") #首次初始化
-        if isClient == -1:
-            return
-    else:
-        isClient = clienter.SendData("second") #非首次初始化
-        if isClient == -1:
-            return
 
     choice = clienter.RecData() #inputMethod: Keyboard/Voice
     if choice == -1: #连接中断处理
@@ -69,13 +54,7 @@ def main():
 
     #***************获取回复*****************#
 
-        try:
-            message = cnn.SendReqByChoice(question,choice) #发送消息，若发送失败则重连
-        except:
-            cnn.isfirstReq = True
-            cnn.GetAPI_Obj_Chrome()
-            cnn.InitChatGPT()
-            message = cnn.SendReqByChoice(question,choice) #重新发送
+        message = chatgpt.SendRequest(question)
 
         print("Amadeus:\n",message,"\n...end")
 
@@ -89,7 +68,7 @@ def main():
         
         lanType = detect(message) #输出语言判断
         if lanType != "ja": #chatgpt回复判断，确保输入到模型的语料是Ja
-            message = translate.TranslateByBaidu(message, toLang="ja",fromLang="zh") #纠正中文输出，将中文转换为日文
+            message = translate.TranslateByBaidu(message, toLang="jp") #纠正输出，将其他语言的输出转换为日文
             """
             isClient = clienter.SendData("retry")
             if isClient == -1:

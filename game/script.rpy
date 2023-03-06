@@ -77,27 +77,7 @@ label ConnectWrong:
 label WaitingForServer:
     $ renpy.block_rollback()
     s "已与服务端建立握手，等待服务端程序初始化..."        
-    jump Waiting
-
-label Waiting:
-    s "..."
-    python:
-        client.setblocking(0) #设置非阻塞
-        try:
-            data = client.recv(1024).decode() #阻塞，直到服务端初始化完成
-        except:
-            data = bytes()
-
-    if len(data) > 0 and data == "first":
-        s "服务端初始化已完成，进入模式选择阶段..."
-        jump choiceYourInput
-    
-    if len(data) > 0 and data == "second":
-        s "正在恢复上一次会话..."
-        jump choiceYourInput
-
-    jump Waiting
-
+    jump choiceYourInput
 
 #选择输入方式
 label choiceYourInput:

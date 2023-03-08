@@ -13,6 +13,9 @@
 
 define config.name = _("Amadeus System")
 
+# 完全禁用回滚
+define config.rollback_enabled = False
+
 
 ## 决定上面给出的标题是否显示在标题界面屏幕。设置为 False 来隐藏标题。
 
